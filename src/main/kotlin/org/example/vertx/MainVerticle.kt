@@ -6,7 +6,6 @@ import io.vertx.core.Promise
 import io.vertx.core.Vertx
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.core.logging.SLF4JLogDelegateFactory
-import org.example.vertx.sockjs.SockJsClient
 
 fun main() {
   val vertx = Vertx.vertx()
@@ -30,7 +29,7 @@ class MainVerticle : AbstractVerticle() {
 
     vertx.deployVerticle(Server()) { serverDeploy: AsyncResult<String> ->
       if (serverDeploy.succeeded()) {
-        vertx.deployVerticle(SockJsClient()) { clientDeploy: AsyncResult<String> ->
+        vertx.deployVerticle(Client()) { clientDeploy: AsyncResult<String> ->
           if (clientDeploy.succeeded()) {
             startPromise.complete()
           } else {
@@ -38,7 +37,6 @@ class MainVerticle : AbstractVerticle() {
             startPromise.fail(clientDeploy.cause())
           }
         }
-        // startPromise.complete() // TODO
       } else {
         logger.error(serverDeploy.cause())
         startPromise.fail(serverDeploy.cause())
