@@ -2,6 +2,7 @@ package org.example.vertx
 
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.handler.sockjs.SockJSHandler
 import io.vertx.ext.web.handler.sockjs.SockJSHandlerOptions
 import io.vertx.kotlin.core.http.listenAwait
@@ -25,10 +26,15 @@ class Server : CoroutineVerticle() {
       }
     }
 
-    router.route("/sock/*").handler(sockJSHandler)
-    router.route("/").handler {
-      it.response().sendFile("ws.html")
-    }
+    router
+      .route("/sock/*")
+      .handler(sockJSHandler)
+    router
+      .route("/ws.html")
+      .handler { it.response().sendFile("ws.html") }
+    router
+      .get()
+      .handler(StaticHandler.create())
 
     vertx
       .createHttpServer()
