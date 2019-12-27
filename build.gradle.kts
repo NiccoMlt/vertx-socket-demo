@@ -18,6 +18,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
     // io.vertx:vertx-core : Vert.x plugin includes vertx-core dependency with the specified version
+    implementation("io.vertx:vertx-web") // Vert.x plugin enforces its version
     implementation("io.vertx:vertx-lang-kotlin") // Vert.x plugin enforces its version
     implementation("io.vertx:vertx-lang-kotlin-coroutines") // Vert.x plugin enforces its version
     implementation("ch.qos.logback:logback-classic:+") // Logback version is not important in this demo
