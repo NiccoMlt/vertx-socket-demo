@@ -31,10 +31,8 @@ class MainVerticle : AbstractVerticle() {
 
     vertx.deployVerticle(Server()) { serverDeploy: AsyncResult<String> ->
       if (serverDeploy.succeeded()) {
-        logger.info(serverDeploy.result())
         vertx.deployVerticle(Client()) { clientDeploy: AsyncResult<String> ->
           if (clientDeploy.succeeded()) {
-            logger.info(clientDeploy.result())
             startPromise.complete()
           } else {
             logger.error(clientDeploy.cause())
