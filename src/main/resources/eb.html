@@ -1,19 +1,3 @@
-<!--
-  ~ Copyright 2011-2012 the original author or authors.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -23,22 +7,40 @@
 </head>
 <body>
 
-SockJS EventBus bridge
+<h1>SockJS EventBus bridge</h1>
 
+<!-- https://itnext.io/web-sockets-with-vert-x-and-sockjs-1f0710264eea -->
 <script>
-  const eb = new EventBus('http://localhost:8080/eventbus');
+  const options = {
+    vertxbus_reconnect_attempts_max: Infinity, // Max reconnect attempts
+    vertxbus_reconnect_delay_min: 1000, // Initial delay (in ms) before first reconnect attempt
+    vertxbus_reconnect_delay_max: 5000, // Max delay (in ms) between reconnect attempts
+    vertxbus_reconnect_exponent: 2, // Exponential backoff factor
+    vertxbus_randomization_factor: 0.5 // Randomization factor between 0 and 1
+  };
+  const eventBus = new EventBus('http://localhost:8080/eventbus', options);
+  eventBus.enableReconnect(true);
 
-  // eb.onopen = function() {
-  //
-  //   // set a handler to receive a message
-  //   eb.registerHandler('some-address', function(error, message) {
-  //     console.log('received a message: ' + JSON.stringify(message));
-  //   });
-  //
-  //   // send a message
-  //   eb.send('some-address', {name: 'tim', age: 587});
-  //
-  // }
+  eventBus.onopen = function () {
+    eventBus.registerHandler('out', function (error, message) {
+      console.log('received a message: ' + JSON.stringify(message));
+      const counter = message.body;
+      console.log(counter);
+      document.getElementById('current_value').innerHTML = counter;
+    });
+  };
+
+  function increment() {
+    eventBus.send('in', 1)
+  }
 </script>
+
+<h3>Counter</h3>
+Current counter:
+<span id="current_value"></span>
+<div>
+  <input onclick="increment();" type="button" value="Increment">
+</div>
+
 </body>
 </html>

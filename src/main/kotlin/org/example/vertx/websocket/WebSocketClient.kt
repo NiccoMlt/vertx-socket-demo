@@ -1,11 +1,11 @@
-package org.example.vertx
+package org.example.vertx.websocket
 
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.http.webSocketAwait
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 
-class Client : CoroutineVerticle() {
+class WebSocketClient : CoroutineVerticle() {
   private val logger = LoggerFactory.getLogger(this.javaClass)
 
   override suspend fun start() {
