@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { increment } from '../store/counterSlice';
+import { RootState } from '../store/rootReducer';
 
 const EventBusCounter: React.FC = () => {
-  const [counter, setCounter] = useState(0);
+  const counter = useSelector((state: RootState) => state.counter);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -10,7 +14,7 @@ const EventBusCounter: React.FC = () => {
         {counter}
       </span>
       <div>
-        <input onClick={() => setCounter(counter + 1)} type="button" value="Increment" />
+        <input onClick={() => dispatch(increment())} type="button" value="Increment" />
       </div>
     </>
   );

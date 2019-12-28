@@ -1,7 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import counterSlice from './counterSlice';
 
 const rootReducer = combineReducers({
-  // TODO
+  counter: counterSlice,
 });
 
 /** Root Redux store types. */
