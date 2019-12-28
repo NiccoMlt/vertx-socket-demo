@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 
 type SockJsOutputProps = {
@@ -6,8 +6,9 @@ type SockJsOutputProps = {
   options?: SockJS.Options;
 };
 
+/** @deprecated because now using EventBus */
 const SockJsOutput: React.FC<SockJsOutputProps> = (props: SockJsOutputProps) => {
-  const {url, options} = props;
+  const { url, options } = props;
 
   const [sock, setSock] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
@@ -37,7 +38,7 @@ const SockJsOutput: React.FC<SockJsOutputProps> = (props: SockJsOutputProps) => 
 
   useEffect(() => () => sock?.close());
 
-  const stateMsg = () => {
+  const stateMsg: () => string = () => {
     switch (sock?.readyState) {
       case undefined:
         return 'Socket is undefined';

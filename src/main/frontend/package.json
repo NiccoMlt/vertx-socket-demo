@@ -30,6 +30,7 @@
     "@types/react-redux": "^7.1.5",
     "@types/sockjs-client": "^1.1.1",
     "@types/vertx3-eventbus-client": "^3.5.0",
+    "@types/webpack-env": "^1.14.1",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-eslint": "10.0.3",
